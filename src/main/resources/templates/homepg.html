@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <div th:replace="base :: headerfg"></div>
+</head>
+<body>
+<div th:replace="base :: navlinksfg"></div>
+<h1>All Topics</h1>
+<br/><br/>
+<div class="card-deck">
+    <div class="card" th:each="topic : ${topics}">
+        <div class="card-body">
+            <h5 class="card-title">[[${topic.title}]]</h5>
+            <p class="card-text">[[${topic.description}]]</p>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary" th:href="@{/showCourses/{id}(id=${topic.id})}">View Courses</a>
+        </div>
+    </div>
+
+</div>
+
+
+<div th:replace="base :: footerfg"></div>
+</body>
+</html>
