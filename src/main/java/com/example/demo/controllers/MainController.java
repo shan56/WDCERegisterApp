@@ -1,31 +1,30 @@
 package com.example.demo.controllers;
 
 import com.example.demo.interfaces.*;
-import com.example.demo.models.CRN;
-import com.example.demo.models.Course;
-import com.example.demo.models.Topic;
+import com.example.demo.models.*;
 import com.example.demo.utilities.ExcelFileType;
 import com.example.demo.utilities.ExcelReadWrite;
+import com.example.demo.utilities.GenPdf;
+import org.apache.poi.ss.formula.functions.Now;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Controller
 public class MainController {
     private final String FILE_PATH = "C:\\Users\\Sue\\Documents\\";
-
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
 
     @Autowired
     CourseRepository courseRepository;
@@ -35,6 +34,11 @@ public class MainController {
 
     @Autowired
     CRNRepository crnRepository;
+
+    @Autowired
+    StudentRepository studentRepository;
+
+    GenPdf genPdf = new GenPdf();
 
     @RequestMapping("/")
     public String homepg(Model model) {
@@ -134,6 +138,73 @@ public class MainController {
 
         //return "addCart";
         return "redirect:/";
+    }
+
+
+    @GetMapping("/studentform")
+    public String studentform(Model model) {
+        ArrayList<ClassCRN> allclasses = new ArrayList<ClassCRN>();
+
+        //need to get crns from CART
+        //collect info from CRN & COURSE tables to fill CLASSCRN
+        ClassCRN temp = new ClassCRN();
+        LocalDate current = LocalDate.of(2020, 8, 20);
+        temp.setCourseno("CMP 111");
+        temp.setCrnno("123123");
+        temp.setTuition(330);
+        temp.setFee(100);
+        temp.setNonMdfee(99);
+        temp.setCourseTotal(499);
+        temp.setStart(current);
+        temp.setTitle("Testing CRN");
+
+        allclasses.add(temp);
+
+        model.addAttribute("student", new Student());
+        model.addAttribute("classes", allclasses);
+        return "studentform";
+    }
+
+    @PostMapping("/studentform")
+    public String displayform(@Valid @ModelAttribute("student") Student student, BindingResult result, Model model) {
+        //String name= student.getFirstname()+student.getLastname();
+        if (result.hasErrors()) {
+            //model.addAttribute("actCourses", courseRepository.findCoursesByActiveIsTrue());
+            return "studentform";
+        } else {
+            studentRepository.save(student);
+            //model.addAttribute(student);
+            return "printRegistration";
+        }
+    }
+
+    //Displays the Registration Forms filled in
+    @RequestMapping(value = "/download", method = RequestMethod.POST)
+    public @ResponseBody
+    String download(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("currStudent") Student student) throws IOException {
+
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            genPdf.makeRegPDF(student, baos);
+            // setting some response headers
+            response.setHeader("Expires", "0");
+            response.setHeader("Cache-Control",
+                    "must-revalidate, post-check=0, pre-check=0");
+            response.setHeader("Pragma", "public");
+            // setting the content type
+            response.setContentType("application/pdf");
+            // the contentlength
+            response.setContentLength(baos.size());
+            // write ByteArrayOutputStream to the ServletOutputStream
+            OutputStream os = response.getOutputStream();
+            baos.writeTo(os);
+            os.flush();
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        studentRepository.delete(student);
+        return "printerPage";
     }
 
 }

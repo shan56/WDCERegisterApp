@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -34,6 +35,10 @@ public class CRN {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="course_id")
     private Course course;
+
+    @ManyToMany(mappedBy = "crns")
+    private Collection<Student> students;
+
 
     public CRN() {
     }

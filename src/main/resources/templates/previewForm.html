@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1" name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Student Form</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+          crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous" type="text/javascript"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous" type="text/javascript"></script>
+    <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+            integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous" type="text/javascript"></script>
+    <script type="text/javascript">
+        function myFunction() {
+            document.getElementById("test1").style.display = "block";
+        }
+
+        function myFunction2() {
+            document.getElementById("test2").style.display = "block";
+        }
+
+        function myFunction3() {
+            document.getElementById("test1").style.display = "none";
+
+        }
+
+        function myFunction4() {
+            document.getElementById("test2").style.display = "none";
+
+        }
+
+        function myFunction5() {
+            document.getElementById("vetStuff").style.display = "block";
+        }
+
+        function myFunction6() {
+            document.getElementById("vetStuff").style.display = "none";
+
+        }
+    </script>
+</head>
+<body>
+<div class="container border border-dark pb-3">
+    <div id="head" class="row">
+        <div class="col-lg-12">
+            <img height="100px" width="100px" src="data:image/png;base64,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">
+        </div>
+        <h1>Registration Form</h1>
+        <h3>Please review your information and press submit when you are done.</h3>
+    </div>
+    <div class="row border border-dark" style="background-color: white">
+        <div class="col-md-12">
+            <h5 align="center">Contact Info</h5>
+        </div>
+    </div>
+    <div class="form-row border border-dark p-2">
+        <div class="col-sm-2">
+            <label>MC Student Id</label>
+            <input class="form-control" type="text" placeholder="*{studentId}" disabled/>
+        </div>
+        <div class="col-md-2">
+            <label>First Name</label>
+            <input class="form-control" type="text" placeholder="*{firstname}" disabled/>
+        </div>
+        <div class="col-md-3">
+            <label>Last Name</label>
+            <input class="form-control" type="text" th:field="*{lastname}" placeholder="*{lastname}" disabled/>
+        </div>
+        <div class="col-md-1">
+            <label>MI</label>
+            <input class="form-control" type="text" th:field="*{middleInitial}" placeholder="*{middleInitial}" disabled/>
+        </div>
+        <div class="col-md-4">
+            <label>Email</label>
+            <input class="form-control" type="text" th:field="*{email}" placeholder="*{email}" disabled/>
+        </div>
+    </div>
+    <div class="form-row border border-dark p-2">
+        <div class="col-md-6">
+            <label>Address</label>
+            <input class="form-control" type="text" th:field="*{address}"/>
+            <span class="rounded text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+
+            <label>City</label>
+            <input class="form-control" type="text" th:field="*{city}"/>
+            <span class="rounded text-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
+        </div>
+        <div class="col-md-3">
+            <label>Apartment</label>
+            <input class="form-control" type="text" th:field="*{aptnum}"/>
+            <span class="rounded text-danger" th:if="${#fields.hasErrors('aptnum')}" th:errors="*{aptnum}"></span>
+
+            <div>
+                <label>State</label>
+                <select class="custom-select" th:field="*{State}">
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District Of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA">Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                </select>
+                <span class="rounded text-danger" th:if="${#fields.hasErrors('State')}" th:errors="*{State}"></span>
+            </div>
+        </div>
+        <div class="col-md-3 form-row">
+            <div class="col-6">
+                <label>Zipcode</label>
+                <input class="form-control" type="text" th:field="*{zipcode}"/>
+                <span class="rounded text-danger" th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}"></span>
+            </div>
+
+            <div class="col-6">
+                <label style="color: white">-</label>
+                <input class="form-control" type="text" th:field="*{zipcode2}"/>
+                <span class="rounded text-danger" th:if="${#fields.hasErrors('zipcode2')}"
+                      th:errors="*{zipcode2}"></span>
+            </div>
+
+        </div>
+    </div>
+    <div class="form-row border border-dark p-2">
+        <div class="col-md-4">
+            <label>Home Phone#</label>
+            <input class="form-control" type="tel" th:field="*{homephone}"/>
+            <span class="rounded text-danger" th:if="${#fields.hasErrors('homephone')}" th:errors="*{homephone}"></span>
+        </div>
+        <div class="col-md-4">
+            <label>Work Phone#</label>
+            <input class="form-control" type="text" th:field="*{workphone}"/>
+            <span class="rounded text-danger" th:if="${#fields.hasErrors('workphone')}" th:errors="*{workphone}"></span>
+        </div>
+        <div class="col-md-4">
+            <label>Cell Phone#</label>
+            <input class="form-control" type="text" th:field="*{cellphone}"/>
+            <span class="rounded text-danger" th:if="${#fields.hasErrors('cellphone')}" th:errors="*{cellphone}"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-6 border border-dark">
+            <p>Have you attended MC before?</p>
+            <input type="radio" value="yes" th:field="*{attenMcb4}"/><label>Yes</label>
+            <input type="radio" value="no" th:field="*{attenMcb4}"/><label>No</label>
+            <span class="rounded text-danger" th:if="${#fields.hasErrors('attenMcb4')}" th:errors="*{attenMcb4}"></span>
+            <p style="font-size: xx-small">If you have ever taken a credit class at MC and the last class (credit or
+                non-credit)
+                you took at MC was more than 4 years ago, you must also complete and submit a Student
+                Reactivation form found at http://www.montgomerycollege.edu/studentforms.</p>
+        </div>
+        <div class="col-md-6 border border-dark align=center">
+            <p>How did you hear about this program?</p>
+            <div class="form-row">
+                <span class="rounded text-danger" th:if="${#fields.hasErrors('hearMC')}" th:errors="*{hearMC}"></span>
+                <div class="col-auto">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                               th:field="*{hearMC}" value="Mail brochure"/>
+                        <label class="form-check-label">Mail brochure</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                               th:field="*{hearMC}" value="Website"/>
+                        <label class="form-check-label">Website</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                               th:field="*{hearMC}" value="Social media"/>
+                        <label class="form-check-label">Social media</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                               th:field="*{hearMC}" value="On campus"/>
+                        <label class="form-check-label">On campus</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                               th:field="*{hearMC}" value="Other" checked/>
+                        <label class="form-check-label">other</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-6 border  border-dark">
+            <label>MILITARY:</label>
+            <p style="font-size: small">If the military is paying for your course(s),
+                you must submit the last 4 diits of your SSN.</p>
+            <input class="form-control col-md-4" type="text" th:field="*{digits}"/>
+            <span class="rounded text-danger" th:if="${#fields.hasErrors('digits')}" th:errors="*{digits}"></span>
+        </div>
+        <div class="col-md-6 border  border-dark">
+            <label>STUDENTS WITH DISABILITIES</label>
+            <p style="font-size: small">If you need support services due to a disability,
+                call Workforce Development & Continuing Education at 240-567-4118 at least
+                three weeks before class begins.</p>
+        </div>
+    </div>
+    <div class="form-row border border-dark p-2">
+        <div class="col-md-12"><label>ETHNICITY: Choose one.</label>
+            <div class="form-row col-md-12">
+                <div class="col-md-3">
+                    <input class="form-check-input" type="checkbox" value=""
+                           th:field="*{notHispanic}"> <label class="form-check-label">Not Hispanic/Latino</label>
+                </div>
+                <div class="col-md-3">
+                    <input class="form-check-input" type="checkbox" value=""
+                           th:field="*{hispanic}"> <label class="form-check-label">Hispanic/Latino</label>
+                </div>
+            </div>
+            <hr/>
+            <label>RACE: Choose all that apply - you may choose more than one.</label>
+            <div class="form-row col-md-12">
+                <div class="col-md-2">
+                    <input class="form-check-input" type="checkbox" value=""
+                           th:field="*{americanIndian}"/>
+                    <label class="form-check-label">American Indian</label>
+                </div>
+                <div class="col-md-2">
+                    <input class="form-check-input" type="checkbox" value=""
+                           th:field="*{asian}"> <label class="form-check-label">Asian</label>
+                </div>
+                <div class="col-md-3">
+                    <input class="form-check-input" type="checkbox" value=""
+                           th:field="*{blackAfricanAmerican}"> <label
+                        class="form-check-label">Black/African American</label>
+                </div>
+                <div class="col-md-2">
+                    <input class="form-check-input" type="checkbox" value=""
+                           th:field="*{hawaiian}"> <label class="form-check-label">Hawaiian</label>
+                </div>
+                <div class="col-md-2">
+                    <input class="form-check-input" type="checkbox" value=""
+                           th:field="*{white}"> <label class="form-check-label">White</label>
+                </div>
+            </div>
+            <hr/>
+            <p style="font-size: x-small">(Disclosure not mandatory by Montgomery College, but is required by the U.S.
+                Department of Education.)</p>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-2 border border-dark">
+            <p>Are you a United States Citizen?</p>
+            <input type="radio" value="yes" th:field="*{Citizen}"/><label>Yes</label>
+            <input type="radio" value="no" th:field="*{Citizen}"/><label>No</label>
+            <span class="rounded text-danger"
+                  th:if="${#fields.hasErrors('Citizen')}" th:errors="*{Citizen}"></span>
+        </div>
+        <div class="col-md-8 border border-dark">
+            <div class="form-row">
+                <p>Are you a permanent resident alien?</p>
+                <input type="radio" value="yes"
+                       th:field="*{permanentResident}"/><label>Yes</label> <input
+                    type="radio" value="no" th:field="*{permanentResident}"/><label>No</label>
+                <span class="rounded text-danger"
+                      th:if="${#fields.hasErrors('permanentResident')}"
+                      th:errors="*{permanentResident}"></span></div>
+
+            <div class="col-md-12 form-row" id="permanentStatus">
+                <div class="col-md-3">
+                    <input class="form-check-input" type="checkbox" value=""
+                           th:field="*{greenCard}"/>
+                    <label class="form-check-label">Green Card</label>
+                </div>
+                <div class="col-md-3">
+                    <input class="form-check-input" type="checkbox" value=""
+                           th:field="*{workingCard}"/>
+                    <label class="form-check-label">Working Card</label>
+                </div>
+                <div class="col-md-3">
+                    <input class="form-check-input" type="checkbox" value="" th:field="*{otherStatus}"/>
+                    <label class="form-check-label">Other Status</label>
+                </div>
+                <div class="col-md-3">
+                    <input class="form-check-input" type="text" th:field="*{otherPermanent}"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 border  border-dark">
+            <p>Gender</p>
+            <input type="radio" value="Male" th:field="*{gender}"/><label>Male</label>
+            <input type="radio" value="Female" th:field="*{gender}"/><label>Female</label>
+            <span class="rounded text-danger"
+                  th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span>
+        </div>
+    </div>
+
+    <div class="form-row border border-dark p-2">
+        <label>CHECK ALL THAT APPLY:</label>
+        <div class="col-md-12 form-row">
+            <p>Have you been a Maryland [as defined by Montgomery College]
+                resident for at least three months?</p>
+            <input type="radio" value="yes" th:field="*{MdRes}"/> <label>Yes</label>
+            <input type="radio" value="no" th:field="*{MdRes}"/> <label>No</label>
+            <span class="rounded text-danger"
+                  th:if="${#fields.hasErrors('MdRes')}" th:errors="*{MdRes}"></span>
+        </div>
+        <div class="col-md-12 form-row">
+            <p>Are you 60 years of age or older?</p>
+            <input type="radio" value="yes" th:field="*{sixtyPlus}"/> <label>Yes</label>
+            <input type="radio" value="no" th:field="*{sixtyPlus}"/> <label>No</label>
+            <span class="rounded text-danger"
+                  th:if="${#fields.hasErrors('sixtyPlus')}" th:errors="*{sixtyPlus}"></span>
+
+        </div>
+    </div>
+    <div class="form-row border border-dark">
+        <table class="table table-bordered">
+            <thead class="col-md-12">
+            <tr class="col-md-12">
+                <th class="col-sm-1">CRN #</th>
+                <th class="col-sm-1">Course #</th>
+                <th class="col-sm-3">Course Title</th>
+                <th class="col-sm-1">Start Date</th>
+                <th class="col-sm-1">Tuition</th>
+                <th class="col-sm-1">Fee</th>
+                <th class="col-sm-1">Non-MD Fee</th>
+                <th class="col-sm-1">Course Total</th>
+            </tr>
+            </thead>
+            <tbody class="col-md-12">
+            <tr class="col-md-12" th:each="class : ${classes}">
+                <td colspan="1">[[${class.crnno}]]</td>
+                <td colspan="1">[[${class.courseno}]]</td>
+                <td colspan="1">[[${class.title}]]</td>
+                <td colspan="1">[[${class.start}]]</td>
+                <td colspan="1">[[${class.tuition}]]</td>
+                <td colspan="1">[[${class.fee}]]</td>
+                <td colspan="1">[[${class.nonMdfee}]]</td>
+                <td colspan="1">[[${class.courseTotal}]]</td>
+            </tr>
+            </tbody>
+            <tfoot class="col-md-12">
+            <td colspan="1">Code: GT</td>
+            <td colspan="5">Refunds will go to the registered student of record.</td>
+            <td colspan="1">Total Due</td>
+            <td colspan="1">[[${student.totalTuition}]]</td>
+            </tfoot>
+        </table>
+    </div>
+    <br/>
+    <div class="form-row justify-content-center">
+        <button type="reset" class="btn btn-outline-dark">Reset</button>
+        <button type="submit" class="btn btn-outline-dark">Submit</button>
+    </div>
+
+</div>
+</body>
+</html>

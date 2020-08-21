@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.tymeleaf.org">
+<head>
+    <title>Title</title>
+    <meta charset="ISO-8859-1" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Print Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+            integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container border border-dark pb-3">
+    <div id="head" class="row">
+        <div class="col-lg-12">
+            <img height="100px" width="100px" src="data:image/png;base64,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">
+            <p>Student ID : [[${student.studentId}]]</p>
+        </div>
+    </div>
+    <div class="row border border-dark" style="background-color: white">
+        <div class="col-md-12">
+            <h5 align="center">Contact Info</h5>
+        </div>
+    </div>
+    <div id="contactInformation" class="row" >
+        <div class="col-lg-12 border border-dark" >
+            <p>Full Name: [[${student.lastname}]] [[${student.firstname}]] [[${student.middleInitial}]]</p>
+            <p>Address:[[${student.address}]]  Apt:[[${student.aptnum}]]</p>
+            <p>City: [[${student.city}]] State: [[${student.State}]] Zip: [[${student.zipcode}]]</p>
+            <p>Phone:[[${student.cellphone}]] Email: [[${student.email}]]</p>
+        </div>
+    </div>
+    <div class="row border border-dark" style="background-color: white">
+        <div class="col-md-12">
+            <h5 align="center">Personal Information</h5>
+        </div>
+    </div>
+    <div id="personalInformation" class="row" >
+        <div class="col-sm-3 border border-dark" >
+            <p>US Citizen</p>
+            <span th:if="${student.Citizen==True}">&#9745</span><span th:if="${student.Citizen==False}">&#9746</span>
+        </div>
+        <div class="col-sm-3 border border-dark" >
+            <p>Permanent Resident Alien</p>
+            <span th:if="${student.PermanentResidnetAlien==True}">&#9745</span><span th:if="${student.PermanentResidnetAlien==False}">&#9746</span>
+        </div>
+        <div class="col-sm-3 border border-dark" >
+            <p>Gender:[[${student.gender}]]</p>
+        </div>
+    </div>
+    <div id="race" class ="row  border border-dark">
+        <div class="col-sm-2 border-dark">
+            <p>Race/Ethnicity:</p>
+        </div>
+        <div class="col-sm-10" >
+            <div class="row ">
+                <div class="col-sm-2 border border-light" >
+                    <p>Hispanic/Latino</p>
+                    <p><span  th:if="${student.hispanic==True}">&#9745</span><span th:if="${student.hispanic==False}">&#9746</span></p>
+                </div>
+                <div class="col-sm-2 border border-light" >
+                    <p>American Indian/Alaskan Native</p>
+                    <p><span th:if="${student.AmericanIndian==True}">&#9745</span><span th:if="${student.AmericanIndian==False}">&#9746</span></p>
+                </div>
+                <div class="col-sm-2 border border-light">
+                    <p>Asian</p>
+                    <p><span th:if="${student.Asian==True}">&#9745</span><span th:if="${student.Asian==False}">&#9746</span></p>
+                </div>
+                <div class="col-sm-2 border border-light" >
+                    <p>Black/ African American</p>
+                    <p><span th:if="${student.BlackAfricanAmerican==True}">&#9745</span><span th:if="${student.BlackAfricanAmerican==False}">&#9746</span></p>
+                </div>
+                <div class="col-sm-2 border border-light" >
+                    <p>White</p>
+                    <p><span th:if="${student.White==True}">&#9745</span><span th:if="${student.White==False}">&#9746</span></p>
+                </div>
+                <div class="col-sm-2 border border-light" >
+                    <p>Hawaiian/ Pacific Islander</p>
+                    <p><span th:if="${student.Hawaiian==True}">&#9745</span><span th:if="${student.Hawaiian==False}">&#9746</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row border border-dark" style="background-color: white">
+        <div class="col-md-12">
+            <h5 align="center">Courses You Signed Up For</h5>
+        </div>
+    </div>
+    <div class="row border border-dark">
+        <div th:each="crn : ${student.crns}" class="col-md-3 border border-dark">
+            <p>[[${crn.crn}]]</p>
+        </div>
+    </div>
+    <div class="row border border-dark justify-content-center">
+        <form th:action="@{@{/download/(currStudent=${student.id})}}" method="post">
+            <button type="submit" class="btn btn-outline-dark d-print-none">Generate Print-outs</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
