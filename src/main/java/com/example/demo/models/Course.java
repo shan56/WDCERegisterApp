@@ -32,10 +32,10 @@ public class Course {
     private Topic topic;
 
     @OneToMany(mappedBy="course", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    public Set<CRN> crns;
+    public Set<CRNRecord> crns;
 
     public Course() {
-        this.crns = new HashSet<CRN>();
+        this.crns = new HashSet<CRNRecord>();
     }
 
     public long getId() {
@@ -124,6 +124,14 @@ public class Course {
 
     public void setTopic(Topic topic) {
         this.topic = topic;
+    }
+
+    public Set<CRNRecord> getCrns() {
+        return crns;
+    }
+
+    public void setCrns(Set<CRNRecord> crns) {
+        this.crns = crns;
     }
 
     public boolean isEmpty(){

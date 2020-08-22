@@ -95,8 +95,8 @@
         </div>
     </div>
     <div class="row border border-dark">
-        <div th:each="crn : ${student.crns}" class="col-md-3 border border-dark">
-            <p>[[${crn.crn}]]</p>
+        <div th:each="crnRecord : ${student.crnRecords}" class="col-md-3 border border-dark">
+            <p>[[${crnRecord.crnRecord}]]</p>
         </div>
     </div>
     <div class="row border border-dark justify-content-center">

@@ -1,6 +1,6 @@
 package com.example.demo.utilities;
 
-import com.example.demo.models.CRN;
+import com.example.demo.models.CRNRecord;
 import com.example.demo.models.Course;
 import com.example.demo.models.Topic;
 import org.apache.poi.ss.usermodel.Cell;
@@ -14,15 +14,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 
 public class ExcelReadWrite {
     public void read(String filename, ExcelFileType excelFileType,
-                     ArrayList<Topic> topicAL, ArrayList<Course> courseAL, ArrayList<CRN> crnAL) {
+                     ArrayList<Topic> topicAL, ArrayList<Course> courseAL, ArrayList<CRNRecord> crnRecordAL) {
         Topic topic = new Topic();
         Course course = new Course();
-        CRN crn = new CRN();
+        CRNRecord crnRecord = new CRNRecord();
         String textBuffer = "";
         double doubleBuffer = 0;
 
@@ -50,7 +49,7 @@ public class ExcelReadWrite {
                         break;
 
                     case CRN:
-                        crn = new CRN();
+                        crnRecord = new CRNRecord();
                         break;
                 }
 
@@ -87,7 +86,7 @@ public class ExcelReadWrite {
                             break;
 
                         case CRN:
-                            if (readCRN(crn, idx, textBuffer, doubleBuffer))
+                            if (readCRN(crnRecord, idx, textBuffer, doubleBuffer))
                                 modified = true;
                             break;
                     }
@@ -118,7 +117,7 @@ public class ExcelReadWrite {
                             break;
 
                         case CRN:
-                            crnAL.add(crn);
+                            crnRecordAL.add(crnRecord);
                             break;
 
                         default:
@@ -218,67 +217,76 @@ public class ExcelReadWrite {
     }
 
 
-    private boolean readCRN(CRN crnBuf, int idx, String textBuf, double doubleBuf) {
+    private boolean readCRN(CRNRecord crnRecordBuf, int idx, String textBuf, double doubleBuf) {
         boolean modFlag = false;
 
         switch(idx) {
             case 0:// main course no
-                crnBuf.setMainCourseNo(textBuf);
+                crnRecordBuf.setMainCourseNo(textBuf);
                 modFlag = true;
                 break;
 
-            case 1:   // course no
-                crnBuf.setCourseNo(textBuf);
+            case 1: // title
+                crnRecordBuf.setTitle(textBuf);
                 modFlag = true;
                 break;
 
-            case 2:   // crn
-                crnBuf.setCrn((long)doubleBuf);
+            case 2:   // course no
+                crnRecordBuf.setCourseNo(textBuf);
                 modFlag = true;
                 break;
 
-            case 3:   // startDate
-                crnBuf.setStartDate((long)doubleBuf);
+            case 3:   // crn
+                crnRecordBuf.setCrn((long)doubleBuf);
+                modFlag = true;
+
+            case 4:  // location
+                crnRecordBuf.setLocation(textBuf);
                 modFlag = true;
                 break;
 
-            case 4:   // endDate
-                crnBuf.setEndDate((long)doubleBuf);
+            case 5:   // startDate
+                crnRecordBuf.setStartDate((long)doubleBuf);
                 modFlag = true;
                 break;
 
-            case 5:   // startTime
-                crnBuf.setStartTime((long)doubleBuf);
+            case 6:   // endDate
+                crnRecordBuf.setEndDate((long)doubleBuf);
                 modFlag = true;
                 break;
 
-            case 6:   // endTime
-                crnBuf.setEndTime((long)doubleBuf);
+            case 7:   // startTime
+                crnRecordBuf.setStartTime((long)doubleBuf);
                 modFlag = true;
                 break;
 
-            case 7:   // sessions
-                crnBuf.setSessions((long)doubleBuf);
+            case 8:   // endTime
+                crnRecordBuf.setEndTime((long)doubleBuf);
                 modFlag = true;
                 break;
 
-            case 8:   // weekdays
-                crnBuf.setWeekdays(textBuf);
+            case 9:   // sessions
+                crnRecordBuf.setSessions((long)doubleBuf);
                 modFlag = true;
                 break;
 
-            case 9:   // base
-                crnBuf.setBase((long)doubleBuf);
+            case 10:   // weekdays
+                crnRecordBuf.setWeekdays(textBuf);
                 modFlag = true;
                 break;
 
-            case 10:   // fee
-                crnBuf.setFee((long)doubleBuf);
+            case 11:   // base
+                crnRecordBuf.setBase((long)doubleBuf);
                 modFlag = true;
                 break;
 
-            case 11:   // nmr
-                crnBuf.setNmr((long)doubleBuf);
+            case 12:   // fee
+                crnRecordBuf.setFee((long)doubleBuf);
+                modFlag = true;
+                break;
+
+            case 13:   // nmr
+                crnRecordBuf.setNmr((long)doubleBuf);
                 modFlag = true;
                 break;
 

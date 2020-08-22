@@ -13,15 +13,17 @@ import java.util.HashSet;
 
 
 @Entity
-@Table(name="CRN")
-public class CRN {
+@Table(name="CRNRecord")
+public class CRNRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String mainCourseNo;
+    private String title;
     private String courseNo;
     private long crn;
+    private String location;
     private Date startDate;
     private Date endDate;
     private LocalTime startTime;
@@ -31,16 +33,13 @@ public class CRN {
     private long base;
     private long fee;
     private long nmr;
+    private long total;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="course_id")
     private Course course;
 
-    @ManyToMany(mappedBy = "crns")
-    private Collection<Student> students;
-
-
-    public CRN() {
+    public CRNRecord() {
     }
 
     public long getId() {
@@ -59,6 +58,14 @@ public class CRN {
         this.mainCourseNo = mainCourseNo;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getCourseNo() {
         return courseNo;
     }
@@ -73,6 +80,14 @@ public class CRN {
 
     public void setCrn(long crn) {
         this.crn = crn;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public Date getStartDate() {
@@ -97,6 +112,11 @@ public class CRN {
 
     }
 
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+
     public LocalTime getStartTime() {
         return startTime;
     }
@@ -109,6 +129,11 @@ public class CRN {
         this.startTime = LocalTime.of(hr, min);
     }
 
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+
     public LocalTime getEndTime() {
         return endTime;
     }
@@ -116,6 +141,10 @@ public class CRN {
     public void setEndTime(long endTime) {
         Duration tmpTime = Duration.ofSeconds(endTime);
         this.endTime = LocalTime.of((int)tmpTime.toHours(), (int)tmpTime.toMinutes());
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
     }
 
     public long getSessions() {
@@ -156,6 +185,14 @@ public class CRN {
 
     public void setNmr(long nmr) {
         this.nmr = nmr;
+    }
+
+    public long getTotal() {
+        return total;
+    }
+
+    public void setTotal(long total) {
+        this.total = total;
     }
 
     public Course getCourse() {

@@ -56,8 +56,8 @@
     <h1>Registration Form</h1>
     <h2>Please enter your information and press submit when you are
         done.</h2>
-    <form action="#" th:action="@{/studentform}" th:object="${student}"
-          method="post">
+    <form action="#" th:action="@{/processForm}" th:object="${student}" method="post">
+		<input type="number" th:field="*{id}" hidden/>
         <div class="form-row border border-dark p-2">
             <div class="col-sm-2">
 				<label>MC Student Id</label>
@@ -102,7 +102,7 @@
 
                 <div>
 					<label>State</label>
-                    <select class="custom-select" th:field="*{State}">
+                    <select class="custom-select" th:field="*{state}">
                         <option value="AL">Alabama</option>
                         <option value="AK">Alaska</option>
                         <option value="AZ">Arizona</option>
@@ -155,7 +155,7 @@
                         <option value="WI">Wisconsin</option>
                         <option value="WY">Wyoming</option>
                     </select>
-					<span class="rounded text-danger" th:if="${#fields.hasErrors('State')}" th:errors="*{State}"></span>
+					<span class="rounded text-danger" th:if="${#fields.hasErrors('state')}" th:errors="*{state}"></span>
                 </div>
             </div>
             <div class="col-md-3 form-row">
@@ -302,10 +302,10 @@
         <div class="form-row">
             <div class="col-md-2 border border-dark">
                 <p>Are you a United States Citizen?</p>
-                <input type="radio" value="yes" th:field="*{Citizen}"/><label>Yes</label>
-                <input type="radio" value="no" th:field="*{Citizen}"/><label>No</label>
+                <input type="radio" value="yes" th:field="*{citizen}"/><label>Yes</label>
+                <input type="radio" value="no" th:field="*{citizen}"/><label>No</label>
                 <span class="rounded text-danger"
-                      th:if="${#fields.hasErrors('Citizen')}" th:errors="*{Citizen}"></span>
+                      th:if="${#fields.hasErrors('citizen')}" th:errors="*{citizen}"></span>
             </div>
             <div class="col-md-8 border border-dark">
 				<div class="form-row">
@@ -351,10 +351,10 @@
             <div class="col-md-12 form-row">
                 <p>Have you been a Maryland [as defined by Montgomery College]
                     resident for at least three months?</p>
-                <input type="radio" value="yes" th:field="*{MdRes}"/> <label>Yes</label>
-                <input type="radio" value="no" th:field="*{MdRes}"/> <label>No</label>
+                <input type="radio" value="yes" th:field="*{mdRes}"/> <label>Yes</label>
+                <input type="radio" value="no" th:field="*{mdRes}"/> <label>No</label>
                 <span class="rounded text-danger"
-                      th:if="${#fields.hasErrors('MdRes')}" th:errors="*{MdRes}"></span>
+                      th:if="${#fields.hasErrors('mdRes')}" th:errors="*{mdRes}"></span>
             </div>
             <div class="col-md-12 form-row">
                 <p>Are you 60 years of age or older?</p>
@@ -366,36 +366,38 @@
             </div>
         </div>
         <div class="form-row border border-dark">
-			<table class="table table-bordered">
-				<thead class="col-md-12">
-				<tr class="col-md-12">
+			<table class="table table-bordered col-md-12">
+				<thead>
+				<tr class="d-flex">
 					<th class="col-sm-1">CRN #</th>
 					<th class="col-sm-1">Course #</th>
-					<th class="col-sm-3">Course Title</th>
-					<th class="col-sm-1">Start Date</th>
+					<th class="col-sm-4">Course Title</th>
+					<th class="col-sm-2">Start Date</th>
 					<th class="col-sm-1">Tuition</th>
 					<th class="col-sm-1">Fee</th>
 					<th class="col-sm-1">Non-MD Fee</th>
 					<th class="col-sm-1">Course Total</th>
 				</tr>
 				</thead>
-				<tbody class="col-md-12">
-				<tr class="col-md-12" th:each="class : ${classes}">
-					<td colspan="1">[[${class.crnno}]]</td>
-					<td colspan="1">[[${class.courseno}]]</td>
-					<td colspan="1">[[${class.title}]]</td>
-					<td colspan="1">[[${class.start}]]</td>
-					<td colspan="1">[[${class.tuition}]]</td>
-					<td colspan="1">[[${class.fee}]]</td>
-					<td colspan="1">[[${class.nonMdfee}]]</td>
-					<td colspan="1">[[${class.courseTotal}]]</td>
+				<tbody>
+				<tr class="d-flex" th:each="course : ${allcourses}">
+					<td class="col-sm-1">[[${course.crnNo}]]</td>
+					<td class="col-sm-1">[[${course.courseNo}]]</td>
+					<td class="col-sm-4">[[${course.title}]]</td>
+					<td class="col-sm-2">[[${course.startDate}]]</td>
+					<td class="col-sm-1" style="text-align: right">[[${course.base}]]</td>
+					<td class="col-sm-1" style="text-align: right">[[${course.fee}]]</td>
+					<td class="col-sm-1" style="text-align: right">[[${course.nmr}]]</td>
+					<td class="col-sm-1" style="text-align: right">[[${course.total}]]</td>
 				</tr>
 				</tbody>
-				<tfoot class="col-md-12">
-					<td colspan="1">Code: GT</td>
-					<td colspan="5">Refunds will go to the registered student of record.</td>
-					<td colspan="1">Total Due</td>
-					<td colspan="1">[[${student.totalTuition}]]</td>
+				<tfoot>
+				<tr class="d-flex">
+					<td class="col-sm-1">Code: GT</td>
+					<td class="col-sm-9">Refunds will go to the registered student of record.</td>
+					<td class="col-sm-1">Total Due</td>
+					<td class="col-sm-1" style="text-align: right">[[${student.totalTuition}]]</td>
+				</tr>
 				</tfoot>
 			</table>
 		</div>

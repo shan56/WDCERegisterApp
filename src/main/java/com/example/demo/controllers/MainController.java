@@ -5,7 +5,6 @@ import com.example.demo.models.*;
 import com.example.demo.utilities.ExcelFileType;
 import com.example.demo.utilities.ExcelReadWrite;
 import com.example.demo.utilities.GenPdf;
-import org.apache.poi.ss.formula.functions.Now;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +18,10 @@ import javax.validation.Valid;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Random;
 
 @Controller
 public class MainController {
@@ -33,10 +34,13 @@ public class MainController {
     TopicRepository topicRepository;
 
     @Autowired
-    CRNRepository crnRepository;
+    CRNRecordRepository crnRecordRepository;
 
     @Autowired
     StudentRepository studentRepository;
+
+    @Autowired
+    RegisterCourseRepository registerCourseRepository;
 
     GenPdf genPdf = new GenPdf();
 
@@ -68,7 +72,7 @@ public class MainController {
                                    @RequestParam("crnfilename") MultipartFile crnfilename) {
         ArrayList<Topic> alltopics = new ArrayList<>();
         ArrayList<Course> allcourses = new ArrayList<>();
-        ArrayList<CRN> allcrns = new ArrayList<>();
+        ArrayList<CRNRecord> allcrns = new ArrayList<>();
         ExcelReadWrite excelReadWrite = new ExcelReadWrite();
 
         if (!topicfilename.isEmpty()) {
@@ -108,12 +112,12 @@ public class MainController {
 
         Course tmpC;
         String mainCourse;
-        for (CRN one : allcrns){
+        for (CRNRecord one : allcrns){
             if (!one.isEmpty()) {
                 mainCourse = one.getMainCourseNo();
                 tmpC = courseRepository.findCourseByCourseId(mainCourse);
                 one.setCourse(tmpC);
-                crnRepository.save(one);
+                crnRecordRepository.save(one);
             }
         }
 
@@ -141,41 +145,92 @@ public class MainController {
     }
 
 
-    @GetMapping("/studentform")
-    public String studentform(Model model) {
-        ArrayList<ClassCRN> allclasses = new ArrayList<ClassCRN>();
+    @RequestMapping("/registrationForm/{id}")
+    public String registrationForm(@PathVariable("id") long id, Model model) {
 
-        //need to get crns from CART
-        //collect info from CRN & COURSE tables to fill CLASSCRN
-        ClassCRN temp = new ClassCRN();
-        LocalDate current = LocalDate.of(2020, 8, 20);
-        temp.setCourseno("CMP 111");
-        temp.setCrnno("123123");
-        temp.setTuition(330);
-        temp.setFee(100);
-        temp.setNonMdfee(99);
-        temp.setCourseTotal(499);
-        temp.setStart(current);
-        temp.setTitle("Testing CRN");
+        Student student = new Student();
+        CRNRecord tmp1 = crnRecordRepository.findById(id).get();
 
-        allclasses.add(temp);
+        RegisterCourse reg1 = new RegisterCourse();
+        reg1.setCrnNo(tmp1.getCrn());
+        reg1.setCourseNo(tmp1.getCourseNo());
+        reg1.setBase(tmp1.getBase());
+        reg1.setFee(tmp1.getFee());
+        reg1.setNmr(tmp1.getNmr());
+        reg1.setTitle(tmp1.getTitle());
+        //reg1.setStartDate(tmp1.getStartDate());
 
-        model.addAttribute("student", new Student());
-        model.addAttribute("classes", allclasses);
-        return "studentform";
+        Random random = new Random();
+        long tempid = (1 + random.nextInt()) * -1;
+        reg1.setOrgstudent(tempid);
+        registerCourseRepository.save(reg1);
+
+        System.out.println("\n---------------- in registrationForm: reg id="+ reg1.getId());
+
+        student.setId(tempid);   //temp place holder
+
+
+        ArrayList<RegisterCourse> allcourses = new ArrayList<>();
+        allcourses.add(reg1);
+        student.setRegisterCourses(allcourses);
+        model.addAttribute("student", student);
+        model.addAttribute("allcourses", allcourses);
+
+        return "registrationForm";
     }
 
-    @PostMapping("/studentform")
-    public String displayform(@Valid @ModelAttribute("student") Student student, BindingResult result, Model model) {
-        //String name= student.getFirstname()+student.getLastname();
+@PostMapping("/processForm")
+public String processForm(@Valid @ModelAttribute("student") Student student,
+                          @ModelAttribute("allcourses") ArrayList<RegisterCourse> allcourses,
+                          BindingResult result, Model model) {
         if (result.hasErrors()) {
-            //model.addAttribute("actCourses", courseRepository.findCoursesByActiveIsTrue());
-            return "studentform";
+            return "registrationForm";
         } else {
+            long tempid = student.getId();
+            student.setId((long)0);
+            Collection<RegisterCourse> allregcourses = registerCourseRepository.findAllByOrgstudentEquals(tempid);
+
+            // need to compute total based on student info
+            long tution;
+            long sum = 0;
+            for (RegisterCourse regcourse : allregcourses) {
+
+                System.out.println("\n---------------- in processForm: regcourse id="+ regcourse.getId());
+
+                tution = regcourse.getBase();
+                if (!student.isMdRes())
+                    tution += regcourse.getNmr();
+
+                if (!student.isSixtyPlus())
+                    tution += regcourse.getFee();
+
+                regcourse.setTotal(tution);
+                sum += tution;
+            }
+            student.setTotalTuition(sum);
             studentRepository.save(student);
-            //model.addAttribute(student);
-            return "printRegistration";
+
+            for (RegisterCourse regcourse : allregcourses) {
+                System.out.println("\n-------------------student id=" + student.getId() + " regcourse old="+ regcourse.getOrgstudent());
+
+                regcourse.setOrgstudent(student.getId());
+
+                System.out.println(("----------------- regcourse id=" + regcourse.getId())+ " new regcourse old="+ regcourse.getOrgstudent());
+
+                regcourse.setStudent(student);
+                registerCourseRepository.save(regcourse);
+            }
+
+            student.setRegisterCourses(allregcourses);
+            model.addAttribute("student", student);
+            return "previewForm";
         }
+    }
+
+    @PostMapping("/printForm")
+    public String printForm(){
+        System.out.println("In printForm");
+        return "redirect:/";
     }
 
     //Displays the Registration Forms filled in

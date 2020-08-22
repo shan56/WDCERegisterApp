@@ -9,8 +9,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * @author tucke_000
@@ -115,11 +115,86 @@ public class Student {
 
 	private long totalTuition;
 
-	@Size(min=1, max=4)
-	@ManyToMany()
-	private Collection<CRN> crns;
+	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Collection<RegisterCourse> registerCourses;
 
 	public Student() {
+		// initialize non-required fields for preview
+		this.studentId = " ";
+		this.middleInitial= " ";
+		this.aptnum= " ";
+		this.zipcode2= " ";
+		this.homephone= " ";
+		this.workphone= " ";
+		this.hearMC= " ";
+		this.digits= " ";
+		this.otherPermanent= " ";
+		this.registerCourses = new Collection<RegisterCourse>() {
+			@Override
+			public int size() {
+				return 0;
+			}
+
+			@Override
+			public boolean isEmpty() {
+				return false;
+			}
+
+			@Override
+			public boolean contains(Object o) {
+				return false;
+			}
+
+			@Override
+			public Iterator<RegisterCourse> iterator() {
+				return null;
+			}
+
+			@Override
+			public Object[] toArray() {
+				return new Object[0];
+			}
+
+			@Override
+			public <T> T[] toArray(T[] a) {
+				return null;
+			}
+
+			@Override
+			public boolean add(RegisterCourse registerCourse) {
+				return false;
+			}
+
+			@Override
+			public boolean remove(Object o) {
+				return false;
+			}
+
+			@Override
+			public boolean containsAll(Collection<?> c) {
+				return false;
+			}
+
+			@Override
+			public boolean addAll(Collection<? extends RegisterCourse> c) {
+				return false;
+			}
+
+			@Override
+			public boolean removeAll(Collection<?> c) {
+				return false;
+			}
+
+			@Override
+			public boolean retainAll(Collection<?> c) {
+				return false;
+			}
+
+			@Override
+			public void clear() {
+
+			}
+		};
 	}
 
 	public long getId() {
@@ -445,12 +520,12 @@ public class Student {
 		this.totalTuition = totalTuition;
 	}
 
-	public Collection<CRN> getCrns() {
-		return crns;
+	public Collection<RegisterCourse> getRegisterCourses() {
+		return registerCourses;
 	}
 
-	public void setCrns(Collection<CRN> crns) {
-		this.crns = crns;
+	public void setRegisterCourses(Collection<RegisterCourse> registerCourses) {
+		this.registerCourses = registerCourses;
 	}
 
 	//Determines whether or not statement is true and returns yes or no

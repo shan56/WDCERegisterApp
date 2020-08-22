@@ -1,7 +1,5 @@
 package com.example.demo.utilities;
 
-import com.example.demo.models.CRN;
-import com.example.demo.models.Course;
 import com.example.demo.models.Student;
 import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.geom.Rectangle;
@@ -15,7 +13,6 @@ import com.itextpdf.layout.property.VerticalAlignment;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Collection;
 
 public class GenPdf {
     /*Coordinates for the boxes are taken at the bottom left corner of where the box will be.
