@@ -53,6 +53,7 @@
 <div class="container border border-dark pb-3">
     <form action="#" th:action="@{/printForm}" th:object="${student}"
           method="post">
+        <input type="number" th:field="*{id}" hidden/>
         <div id="head" class="row">
             <div class="col-lg-12">
                 <img height="100px" width="100px"
@@ -69,13 +70,13 @@
         <div class="form-row border border-dark p-2">
             <div class="col-sm-2">
                 <label>MC Student Id</label>
-                <input class="form-control" type="text" placeholder="*{studentId}" disabled/>
+                <input class="form-control" type="text" th:field="*{studentId}" placeholder="*{studentId}" disabled/>
             </div>
             <div class="col-md-2">
                 <label>First Name</label>
-                <input class="form-control" type="text" placeholder="*{firstname}" disabled/>
+                <input class="form-control" type="text" th:field="*{firstname}" placeholder="*{firstname}" disabled/>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-5">
                 <label>Last Name</label>
                 <input class="form-control" type="text" th:field="*{lastname}" placeholder="*{lastname}" disabled/>
             </div>
@@ -84,10 +85,39 @@
                 <input class="form-control" type="text" th:field="*{middleInitial}" placeholder="*{middleInitial}"
                        disabled/>
             </div>
+            <div class="col-md-2">
+                <label>Gender</label>
+                <p><span th:if="${student.male}">&#9745</span> <span th:unless="${student.male}">&#9744</span>Male
+                    <span th:unless="${student.male}">&#9745</span> <span th:if="${student.male}">&#9744</span>
+                    Female
+                </p>
+            </div>
+        </div>
+
+        <div class="form-row border border-dark p-2">
+            <div class="col-md-8 form-row">
+                <div class="col-md-2">
+                    <label>Birthdate</label>
+                </div>
+                <div class="col-md-2">
+                    <label>Month</label>
+                    <input class="form-control" type="text" th:field="*{month}" placeholder="*{month}" disabled/>
+                </div>
+                <div class="col-md-2">
+                    <label>Day</label>
+                    <input class="form-control" type="text" th:field="*{day}" placeholder="*{day}" disabled/>
+                </div>
+                <div class="col-md-4">
+                    <label>Year</label>
+                    <input class="form-control" type="text" th:field="*{year}" placeholder="*{year}" disabled/>
+                </div>
+            </div>
+
             <div class="col-md-4">
                 <label>Email</label>
                 <input class="form-control" type="text" th:field="*{email}" placeholder="*{email}" disabled/>
             </div>
+
         </div>
         <div class="form-row border border-dark p-2">
             <div class="col-md-6">
@@ -164,14 +194,11 @@
         <div class="form-row border border-dark p-2">
             <div class="col-md-12"><label>ETHNICITY: Choose one.</label>
                 <div class="form-row col-md-12">
-                    <div class="col-sm-2 form-row">
-                        <p><span th:if="${student.hispanic==True}">&#9745</span></p>
-                        <p>Hispanic/Latino</p>
-                    </div>
-                    <div class="col-sm-2 form-row">
-                        <p><span th:if="${student.notHispanic==True}">&#9745</span></p>
-                        <p>Not Hispanic/Latino</p>
-                    </div>
+                    <p><span th:if="${student.hispanic==True}">&#9745</span>
+                        <span th:if="${student.hispanic==False}">&#9744</span>Hispanic/Latino
+                        <span th:if="${student.hispanic==False}">&#9745</span>
+                        <span th:if="${student.hispanic==True}">&#9744</span>Not Hispanic/Latino
+                    </p>
                 </div>
                 <hr/>
                 <label>RACE: Choose all that apply - you may choose more than one.</label>
@@ -204,7 +231,7 @@
             </div>
         </div>
         <div class="form-row">
-            <div class="col-md-2 border border-dark">
+            <div class="col-md-3 border border-dark">
                 <p>Are you a United States Citizen?</p>
                 <p><span th:if="${student.citizen==True}">&#9745</span> <span
                         th:if="${student.citizen==False}">&#9744</span>Yes
@@ -212,19 +239,16 @@
                             th:if="${student.citizen==True}">&#9744</span> No
                 </p>
             </div>
-            <div class="col-md-8 border border-dark">
+            <div class="col-md-9 border border-dark">
                 <div class="form-row">
                     <p>Are you a permanent resident alien?</p>
-                    <p>
-                        <span th:if="${student.citizen==True}">&#9744 Yes</span>
-                        <span th:if="${student.citizen==True}">&#9744 No</span>
-                        <span th:if="${student.citizen==False}">
+
                     <span th:if="${student.permanentResident==True}">&#9745</span>
                         <span th:unless="${student.permanentResident==True}">&#9744</span> Yes
                     <span th:if="${student.permanentResident==True}">&#9745</span>
                         <span th:unless="${student.permanentResident==True}">&#9744</span> No
                     </span>
-                    </p>
+
                 </div>
                 <div class="col-md-12 form-row">
                 <span th:if="${student.permanentResident==True}">
@@ -237,7 +261,7 @@
                            placeholder="*{otherPermanent}" disabled/>
                 </div>
                 </span>
-                    <span th:unless="${student.permanentResident==True}">
+                <span th:unless="${student.permanentResident==True}">
                 <div class="form-row">
                     <p><span th:if="${student.greenCard==True}">&#9744</span>Green Card</p>
                     <p><span th:if="${student.workingCard==True}">&#9744</span>Working Card</p>
@@ -248,13 +272,6 @@
                 </div>
                 </span>
                 </div>
-            </div>
-            <div class="col-md-2 border  border-dark">
-                <p>Gender</p>
-                <p><span th:if="${student.gender=='Male'}">&#9745</span> <span th:unless="${student.gender=='Male'}">&#9744</span>Male
-                    <span th:unless="${student.gender=='Male'}">&#9745</span> <span th:if="${student.gender=='Male'}">&#9744</span>
-                    Female
-                </p>
             </div>
         </div>
 
@@ -324,7 +341,7 @@
 
 <div class="row border border-dark justify-content-center">
     <form th:action="@{@{/download/(currStudent=${student.id})}}" method="post">
-        <button type="submit" class="btn btn-outline-dark d-print-none">Generate Print-outs</button>
+        <button type="submit" class="btn btn-outline-dark d-print-none">Register</button>
     </form>
 </div>
 </body>

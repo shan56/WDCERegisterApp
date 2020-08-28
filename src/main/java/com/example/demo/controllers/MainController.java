@@ -184,6 +184,7 @@ public String processForm(@Valid @ModelAttribute("student") Student student,
                           @ModelAttribute("allcourses") ArrayList<RegisterCourse> allcourses,
                           BindingResult result, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("allcourses", allcourses);
             return "registrationForm";
         } else {
             long tempid = student.getId();
@@ -240,25 +241,31 @@ public String processForm(@Valid @ModelAttribute("student") Student student,
 
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            genPdf.makeRegPDF(student, baos);
-            // setting some response headers
-            response.setHeader("Expires", "0");
-            response.setHeader("Cache-Control",
-                    "must-revalidate, post-check=0, pre-check=0");
+
+            String homedir = System.getProperty("user.home");
+            String filename = student.getLastname() + "-" + student.getFirstname() + "-" + System.currentTimeMillis() + ".pdf";
+
+            genPdf.makeRegPDF(student, baos, null);
+            genPdf.makeRegPDF(student, null, homedir+"/Downloads/"+filename);
+
+            response.setHeader("Expires", "0");     // setting some response headers
+            response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
             response.setHeader("Pragma", "public");
-            // setting the content type
-            response.setContentType("application/pdf");
-            // the contentlength
-            response.setContentLength(baos.size());
-            // write ByteArrayOutputStream to the ServletOutputStream
-            OutputStream os = response.getOutputStream();
+            response.setContentType("application/pdf");  // setting the content type
+            response.setContentLength(baos.size());      // the contentlength
+            OutputStream os = response.getOutputStream(); // write ByteArrayOutputStream to the ServletOutputStream
             baos.writeTo(os);
             os.flush();
             os.close();
+
+            //
+            // send email with PDF attached from here!
+            //
         } catch (IOException e) {
             e.printStackTrace();
         }
-        studentRepository.delete(student);
+        studentRepository.save(student);   //save registeration time
+        //studentRepository.delete(student);
         return "printerPage";
     }
 

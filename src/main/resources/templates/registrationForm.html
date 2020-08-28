@@ -57,51 +57,86 @@
     <h2>Please enter your information and press submit when you are
         done.</h2>
     <form action="#" th:action="@{/processForm}" th:object="${student}" method="post">
-		<input type="number" th:field="*{id}" hidden/>
+        <input type="number" th:field="*{id}" hidden/>
         <div class="form-row border border-dark p-2">
-            <div class="col-sm-2">
+			<div class="col-sm-2">
 				<label>MC Student Id</label>
-                <input class="form-control" type="text" th:field="*{studentId}"/>
-				<span class="rounded text-danger" th:if="${#fields.hasErrors('studentId')}" th:errors="*{studentId}"></span>
-            </div>
-            <div class="col-md-2">
+				<input class="form-control" type="text" th:field="*{studentId}"/>
+				<span class="rounded text-danger" th:if="${#fields.hasErrors('studentId')}"
+					  th:errors="*{studentId}"></span>
+			</div>
+			<div class="col-md-2">
 				<label>First Name</label>
-                <input class="form-control" type="text" th:field="*{firstname}"/>
-				<span class="rounded text-danger" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></span>
-            </div>
-            <div class="col-md-3">
+				<input class="form-control" type="text" th:field="*{firstname}"/>
+				<span class="rounded text-danger" th:if="${#fields.hasErrors('firstname')}"
+					  th:errors="*{firstname}"></span>
+			</div>
+			<div class="col-md-5">
 				<label>Last Name</label>
-                <input class="form-control" type="text" th:field="*{lastname}"/>
-				<span class="rounded text-danger" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></span>
-            </div>
-            <div class="col-md-1">
+				<input class="form-control" type="text" th:field="*{lastname}"/>
+				<span class="rounded text-danger" th:if="${#fields.hasErrors('lastname')}"
+					  th:errors="*{lastname}"></span>
+			</div>
+			<div class="col-md-1">
 				<label>MI</label>
-                <input class="form-control" type="text" th:field="*{middleInitial}"/>
-				<span class="rounded text-danger"th:if="${#fields.hasErrors('middleInitial')}" th:errors="*{middleInitial}"></span>
+				<input class="form-control" type="text" th:field="*{middleInitial}"/>
+				<span class="rounded text-danger" th:if="${#fields.hasErrors('middleInitial')}"
+					  th:errors="*{middleInitial}"></span>
+			</div>
+			<div class="col-md-2">
+				<label>Gender</label>
+				<input type="radio" value=true th:field="*{male}"/><label>Male</label>
+				<input type="radio" value=false th:field="*{male}"/><label>Female</label>
+				<span class="rounded text-danger"
+					  th:if="${#fields.hasErrors('male')}" th:errors="*{male}"></span>
+			</div>
+		</div>
+        <div class="form-row border border-dark p-2">
+            <div class="col-md-8 form-row">
+                <div class="col-md-2">
+                    <label>Birthdate</label>
+                </div>
+                <div class="col-md-2">
+                    <label>Month</label>
+                    <input class="form-control" type="text" th:field="*{month}"/>
+                    <span class="rounded text-danger" th:if="${#fields.hasErrors('month')}" th:errors="*{month}"></span>
+                </div>
+                <div class="col-md-2">
+                    <label>Day</label>
+                    <input class="form-control" type="text" th:field="*{day}"/>
+                    <span class="rounded text-danger" th:if="${#fields.hasErrors('day')}" th:errors="*{day}"></span>
+                </div>
+                <div class="col-md-4">
+                    <label>Year</label>
+                    <input class="form-control" type="text" th:field="*{year}"/>
+                    <span class="rounded text-danger" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></span>
+                </div>
             </div>
+
             <div class="col-md-4">
-				<label>Email</label>
+                <label>Email</label>
                 <input class="form-control" type="text" th:field="*{email}"/>
-				<span class="rounded text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                <span class="rounded text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
             </div>
+
         </div>
         <div class="form-row border border-dark p-2">
             <div class="col-md-6">
-				<label>Address</label>
-				<input class="form-control" type="text" th:field="*{address}"/>
-				<span class="rounded text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+                <label>Address</label>
+                <input class="form-control" type="text" th:field="*{address}"/>
+                <span class="rounded text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
 
-				<label>City</label>
-				<input class="form-control" type="text" th:field="*{city}"/>
-				<span class="rounded text-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
+                <label>City</label>
+                <input class="form-control" type="text" th:field="*{city}"/>
+                <span class="rounded text-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
             </div>
             <div class="col-md-3">
-				<label>Apartment</label>
-				<input class="form-control" type="text" th:field="*{aptnum}"/>
-				<span class="rounded text-danger" th:if="${#fields.hasErrors('aptnum')}" th:errors="*{aptnum}"></span>
+                <label>Apartment</label>
+                <input class="form-control" type="text" th:field="*{aptnum}"/>
+                <span class="rounded text-danger" th:if="${#fields.hasErrors('aptnum')}" th:errors="*{aptnum}"></span>
 
                 <div>
-					<label>State</label>
+                    <label>State</label>
                     <select class="custom-select" th:field="*{state}">
                         <option value="AL">Alabama</option>
                         <option value="AK">Alaska</option>
@@ -155,206 +190,203 @@
                         <option value="WI">Wisconsin</option>
                         <option value="WY">Wyoming</option>
                     </select>
-					<span class="rounded text-danger" th:if="${#fields.hasErrors('state')}" th:errors="*{state}"></span>
+                    <span class="rounded text-danger" th:if="${#fields.hasErrors('state')}" th:errors="*{state}"></span>
                 </div>
             </div>
             <div class="col-md-3 form-row">
-				<div class="col-6">
-					<label>Zipcode</label>
-					<input class="form-control" type="text" th:field="*{zipcode}"/>
-					<span class="rounded text-danger" th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}"></span>
-				</div>
+                <div class="col-6">
+                    <label>Zipcode</label>
+                    <input class="form-control" type="text" th:field="*{zipcode}"/>
+                    <span class="rounded text-danger" th:if="${#fields.hasErrors('zipcode')}"
+                          th:errors="*{zipcode}"></span>
+                </div>
 
-				<div class="col-6">
-					<label style="color: white">-</label>
-					<input class="form-control" type="text" th:field="*{zipcode2}"/>
-					<span class="rounded text-danger" th:if="${#fields.hasErrors('zipcode2')}" th:errors="*{zipcode2}"></span>
-				</div>
+                <div class="col-6">
+                    <label style="color: white">-</label>
+                    <input class="form-control" type="text" th:field="*{zipcode2}"/>
+                    <span class="rounded text-danger" th:if="${#fields.hasErrors('zipcode2')}"
+                          th:errors="*{zipcode2}"></span>
+                </div>
 
-			</div>
+            </div>
         </div>
         <div class="form-row border border-dark p-2">
-			<div class="col-md-4">
-				<label>Home Phone#</label>
-				<input class="form-control" type="tel" th:field="*{homephone}"/>
-				<span class="rounded text-danger" th:if="${#fields.hasErrors('homephone')}" th:errors="*{homephone}"></span>
-			</div>
-			<div class="col-md-4">
-				<label>Work Phone#</label>
-				<input class="form-control" type="text" th:field="*{workphone}"/>
-				<span class="rounded text-danger" th:if="${#fields.hasErrors('workphone')}" th:errors="*{workphone}"></span>
-			</div>
-			<div class="col-md-4">
-				<label>Cell Phone#</label>
-				<input class="form-control" type="text" th:field="*{cellphone}"/>
-				<span class="rounded text-danger" th:if="${#fields.hasErrors('cellphone')}" th:errors="*{cellphone}"></span>
-			</div>
-		</div>
-		<div class="form-row">
-			<div class="col-md-6 border border-dark">
-				<p>Have you attended MC before?</p>
-				<input type="radio" value="yes" th:field="*{attenMcb4}"/><label>Yes</label>
-				<input type="radio" value="no" th:field="*{attenMcb4}"/><label>No</label>
-				<span class="rounded text-danger" th:if="${#fields.hasErrors('attenMcb4')}" th:errors="*{attenMcb4}"></span>
-				<p style="font-size: xx-small">If you have ever taken a credit class at MC and the last class (credit or non-credit)
-					you took at MC was more than 4 years ago, you must also complete and submit a Student
-					Reactivation form found at http://www.montgomerycollege.edu/studentforms.</p>
-			</div>
-			<div class="col-md-6 border border-dark align=center">
-				<p>How did you hear about this program?</p>
-				<div class="form-row">
-					<span class="rounded text-danger" th:if="${#fields.hasErrors('hearMC')}" th:errors="*{hearMC}"></span>
-					<div class="col-auto">
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox"
-								   th:field="*{hearMC}" value="Mail brochure"/>
-							<label class="form-check-label">Mail brochure</label>
-						</div>
-					</div>
-					<div class="col-auto">
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox"
-								   th:field="*{hearMC}" value="Website"/>
-							<label class="form-check-label">Website</label>
-						</div>
-					</div>
-					<div class="col-auto">
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox"
-								   th:field="*{hearMC}" value="Social media"/>
-							<label class="form-check-label">Social media</label>
-						</div>
-					</div>
-					<div class="col-auto">
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox"
-								   th:field="*{hearMC}" value="Advertisement" checked/>
-							<label class="form-check-label">Advertisement</label>
-						</div>
-					</div>
-					<div class="col-auto">
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox"
-								   th:field="*{hearMC}" value="On campus"/>
-							<label class="form-check-label">On campus</label>
-						</div>
-					</div>
-					<div class="col-auto">
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox"
-								   th:field="*{hearMC}" value="Other" checked/>
-							<label class="form-check-label">other</label>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="form-row">
-			<div class="col-md-6 border  border-dark">
-				<label>MILITARY:</label>
-				<p style="font-size: small">If the military is paying for your course(s),
-					you must submit the last 4 diits of your SSN.</p>
-				<input class="form-control col-md-4" type="text" th:field="*{digits}"/>
-				<span class="rounded text-danger" th:if="${#fields.hasErrors('digits')}" th:errors="*{digits}"></span>
-			</div>
-			<div class="col-md-6 border  border-dark">
-				<label>STUDENTS WITH DISABILITIES</label>
-				<p style="font-size: small">If you need support services due to a disability,
-					call Workforce Development & Continuing Education at 240-567-4118 at least
-					three weeks before class begins.</p>
-			</div>
-		</div>
-        <div class="form-row border border-dark p-2">
-			<div class="col-md-12"><label>ETHNICITY: Choose one.</label>
-				<div class="form-row col-md-12">
-					<div class="col-md-3">
-						<input class="form-check-input" type="checkbox" value=""
-							   th:field="*{notHispanic}"> <label class="form-check-label">Not Hispanic/Latino</label>
-					</div>
-					<div class="col-md-3">
-						<input class="form-check-input" type="checkbox" value=""
-							   th:field="*{hispanic}"> <label class="form-check-label">Hispanic/Latino</label>
-					</div>
-				</div>
-				<hr/>
-				<label>RACE: Choose all that apply - you may choose more than one.</label>
-				<div class="form-row col-md-12">
-					<div class="col-md-2">
-						<input class="form-check-input" type="checkbox" value=""
-							   th:field="*{americanIndian}" />
-						<label class="form-check-label">American Indian</label>
-					</div>
-					<div class="col-md-2">
-						<input class="form-check-input" type="checkbox" value=""
-							   th:field="*{asian}"> <label class="form-check-label">Asian</label>
-					</div>
-					<div class="col-md-3">
-						<input class="form-check-input" type="checkbox" value=""
-							   th:field="*{blackAfricanAmerican}"> <label
-							class="form-check-label">Black/African American</label>
-					</div>
-					<div class="col-md-2">
-						<input class="form-check-input" type="checkbox" value=""
-							   th:field="*{hawaiian}"> <label class="form-check-label">Hawaiian</label>
-					</div>
-					<div class="col-md-2">
-						<input class="form-check-input" type="checkbox" value=""
-							   th:field="*{white}"> <label class="form-check-label">White</label>
-					</div>
-				</div>
-				<hr/>
-				<p style="font-size: x-small">(Disclosure not mandatory by Montgomery College, but is required by the U.S. Department of Education.)</p>
-			</div>
+            <div class="col-md-4">
+                <label>Home Phone#</label>
+                <input class="form-control" type="tel" th:field="*{homephone}"/>
+                <span class="rounded text-danger" th:if="${#fields.hasErrors('homephone')}"
+                      th:errors="*{homephone}"></span>
+            </div>
+            <div class="col-md-4">
+                <label>Work Phone#</label>
+                <input class="form-control" type="text" th:field="*{workphone}"/>
+                <span class="rounded text-danger" th:if="${#fields.hasErrors('workphone')}"
+                      th:errors="*{workphone}"></span>
+            </div>
+            <div class="col-md-4">
+                <label>Cell Phone#</label>
+                <input class="form-control" type="text" th:field="*{cellphone}"/>
+                <span class="rounded text-danger" th:if="${#fields.hasErrors('cellphone')}"
+                      th:errors="*{cellphone}"></span>
+            </div>
         </div>
         <div class="form-row">
-            <div class="col-md-2 border border-dark">
+            <div class="col-md-6 border border-dark">
+                <p>Have you attended MC before?</p>
+                <input type="radio" value="yes" th:field="*{attenMcb4}"/><label>Yes</label>
+                <input type="radio" value="no" th:field="*{attenMcb4}"/><label>No</label>
+                <span class="rounded text-danger" th:if="${#fields.hasErrors('attenMcb4')}"
+                      th:errors="*{attenMcb4}"></span>
+                <p style="font-size: xx-small">If you have ever taken a credit class at MC and the last class (credit or
+                    non-credit)
+                    you took at MC was more than 4 years ago, you must also complete and submit a Student
+                    Reactivation form found at http://www.montgomerycollege.edu/studentforms.</p>
+            </div>
+            <div class="col-md-6 border border-dark align=center">
+                <p>How did you hear about this program?</p>
+                <div class="form-row">
+                    <span class="rounded text-danger" th:if="${#fields.hasErrors('hearMC')}"
+                          th:errors="*{hearMC}"></span>
+                    <div class="col-auto">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox"
+                                   th:field="*{hearMC}" value="Mail brochure"/>
+                            <label class="form-check-label">Mail brochure</label>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox"
+                                   th:field="*{hearMC}" value="Website"/>
+                            <label class="form-check-label">Website</label>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox"
+                                   th:field="*{hearMC}" value="Social media"/>
+                            <label class="form-check-label">Social media</label>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox"
+                                   th:field="*{hearMC}" value="Advertisement" checked/>
+                            <label class="form-check-label">Advertisement</label>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox"
+                                   th:field="*{hearMC}" value="On campus"/>
+                            <label class="form-check-label">On campus</label>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox"
+                                   th:field="*{hearMC}" value="Other" checked/>
+                            <label class="form-check-label">other</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6 border  border-dark">
+                <label>MILITARY:</label>
+                <p style="font-size: small">If the military is paying for your course(s),
+                    you must submit the last 4 diits of your SSN.</p>
+                <input class="form-control col-md-4" type="text" th:field="*{digits}"/>
+                <span class="rounded text-danger" th:if="${#fields.hasErrors('digits')}" th:errors="*{digits}"></span>
+            </div>
+            <div class="col-md-6 border  border-dark">
+                <label>STUDENTS WITH DISABILITIES</label>
+                <p style="font-size: small">If you need support services due to a disability,
+                    call Workforce Development & Continuing Education at 240-567-4118 at least
+                    three weeks before class begins.</p>
+            </div>
+        </div>
+        <div class="form-row border border-dark p-2">
+            <div class="col-md-12"><label>ETHNICITY: Choose one.</label>
+				<div class="col-md-12">
+					<input type="radio" value=true th:field="*{hispanic}"/><label>Hispanic/Latino</label>
+					<input type="radio" value=false th:field="*{hispanic}"/><label>Not Hispanic/Latino</label>
+				</div>
+                <hr/>
+                <label>RACE: Choose all that apply - you may choose more than one.</label>
+                <div class="form-row col-md-12">
+                    <div class="col-md-2">
+                        <input class="form-check-input" type="checkbox" value=""
+                               th:field="*{americanIndian}"/>
+                        <label class="form-check-label">American Indian</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-check-input" type="checkbox" value=""
+                               th:field="*{asian}"> <label class="form-check-label">Asian</label>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-check-input" type="checkbox" value=""
+                               th:field="*{blackAfricanAmerican}"> <label
+                            class="form-check-label">Black/African American</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-check-input" type="checkbox" value=""
+                               th:field="*{hawaiian}"> <label class="form-check-label">Hawaiian</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-check-input" type="checkbox" value=""
+                               th:field="*{white}"> <label class="form-check-label">White</label>
+                    </div>
+                </div>
+                <hr/>
+                <p style="font-size: x-small">(Disclosure not mandatory by Montgomery College, but is required by the
+                    U.S. Department of Education.)</p>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-3 border border-dark">
                 <p>Are you a United States Citizen?</p>
                 <input type="radio" value="yes" th:field="*{citizen}"/><label>Yes</label>
                 <input type="radio" value="no" th:field="*{citizen}"/><label>No</label>
                 <span class="rounded text-danger"
                       th:if="${#fields.hasErrors('citizen')}" th:errors="*{citizen}"></span>
             </div>
-            <div class="col-md-8 border border-dark">
-				<div class="form-row">
-					<p>Are you a permanent resident alien?</p>
-					<input type="radio" value="yes"
-						   th:field="*{permanentResident}"/><label>Yes</label> <input
-							type="radio" value="no" th:field="*{permanentResident}"/><label>No</label>
-					<span class="rounded text-danger"
-						  th:if="${#fields.hasErrors('permanentResident')}"
-						  th:errors="*{permanentResident}"></span></div>
+            <div class="col-md-9 border border-dark">
+                <div class="form-row">
+                    <p>Are you a permanent resident alien?</p>
+                    <input type="radio" value="yes"
+                           th:field="*{permanentResident}"/><label>Yes</label> <input
+                        type="radio" value="no" th:field="*{permanentResident}"/><label>No</label>
+                    <span class="rounded text-danger"
+                          th:if="${#fields.hasErrors('permanentResident')}"
+                          th:errors="*{permanentResident}"></span></div>
 
-				<div class="col-md-12 form-row" id="permanentStatus">
-					<div class="col-md-3">
-						<input class="form-check-input" type="checkbox" value=""
-							   th:field="*{greenCard}"/>
-						<label class="form-check-label">Green Card</label>
-					</div>
-					<div class="col-md-3">
-						<input class="form-check-input" type="checkbox" value=""
-							   th:field="*{workingCard}"/>
-						<label class="form-check-label">Working Card</label>
-					</div>
-					<div class="col-md-3">
-						<input class="form-check-input" type="checkbox" value="" th:field="*{otherStatus}"/>
-						<label class="form-check-label">Other Status</label>
-					</div>
-					<div class="col-md-3">
-						<input class="form-check-input" type="text" th:field="*{otherPermanent}"/>
-					</div>
-				</div>
-            </div>
-            <div class="col-md-2 border  border-dark">
-                <p>Gender</p>
-                <input type="radio" value="Male" th:field="*{gender}"/><label>Male</label>
-                <input type="radio" value="Female" th:field="*{gender}"/><label>Female</label>
-                <span class="rounded text-danger"
-                      th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span>
+                <div class="col-md-12 form-row" id="permanentStatus">
+                    <div class="col-md-2">
+                        <input class="form-check-input" type="checkbox" value=""
+                               th:field="*{greenCard}"/>
+                        <label class="form-check-label">Green Card</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-check-input" type="checkbox" value=""
+                               th:field="*{workingCard}"/>
+                        <label class="form-check-label">Working Card</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-check-input" type="checkbox" value="" th:field="*{otherStatus}"/>
+                        <label class="form-check-label">Other Status</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input class="form-check-input" type="text" th:field="*{otherPermanent}"/>
+                    </div>
+
+                </div>
             </div>
         </div>
 
         <div class="form-row border border-dark p-2">
-			<label>CHECK ALL THAT APPLY:</label>
+            <label>CHECK ALL THAT APPLY:</label>
             <div class="col-md-12 form-row">
                 <p>Have you been a Maryland [as defined by Montgomery College]
                     resident for at least three months?</p>
@@ -373,42 +405,42 @@
             </div>
         </div>
         <div class="form-row border border-dark">
-			<table class="table table-bordered col-md-12">
-				<thead>
-				<tr class="d-flex">
-					<th class="col-sm-1">CRN #</th>
-					<th class="col-sm-1">Course #</th>
-					<th class="col-sm-4">Course Title</th>
-					<th class="col-sm-2">Start Date</th>
-					<th class="col-sm-1">Tuition</th>
-					<th class="col-sm-1">Fee</th>
-					<th class="col-sm-1">Non-MD Fee</th>
-					<th class="col-sm-1">Course Total</th>
-				</tr>
-				</thead>
-				<tbody>
-				<tr class="d-flex" th:each="course : ${allcourses}">
-					<td class="col-sm-1">[[${course.crnNo}]]</td>
-					<td class="col-sm-1">[[${course.courseNo}]]</td>
-					<td class="col-sm-4">[[${course.title}]]</td>
-					<td class="col-sm-2">[[${course.startDate}]]</td>
-					<td class="col-sm-1" style="text-align: right">[[${course.base}]]</td>
-					<td class="col-sm-1" style="text-align: right">[[${course.fee}]]</td>
-					<td class="col-sm-1" style="text-align: right">[[${course.nmr}]]</td>
-					<td class="col-sm-1" style="text-align: right">[[${course.total}]]</td>
-				</tr>
-				</tbody>
-				<tfoot>
-				<tr class="d-flex">
-					<td class="col-sm-1">Code: GT</td>
-					<td class="col-sm-9">Refunds will go to the registered student of record.</td>
-					<td class="col-sm-1">Total Due</td>
-					<td class="col-sm-1" style="text-align: right">[[${student.totalTuition}]]</td>
-				</tr>
-				</tfoot>
-			</table>
-		</div>
-		<br/>
+            <table class="table table-bordered col-md-12">
+                <thead>
+                <tr class="d-flex">
+                    <th class="col-sm-1">CRN #</th>
+                    <th class="col-sm-1">Course #</th>
+                    <th class="col-sm-4">Course Title</th>
+                    <th class="col-sm-2">Start Date</th>
+                    <th class="col-sm-1">Tuition</th>
+                    <th class="col-sm-1">Fee</th>
+                    <th class="col-sm-1">Non-MD Fee</th>
+                    <th class="col-sm-1">Course Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="d-flex" th:each="course : ${allcourses}">
+                    <td class="col-sm-1">[[${course.crnNo}]]</td>
+                    <td class="col-sm-1">[[${course.courseNo}]]</td>
+                    <td class="col-sm-4">[[${course.title}]]</td>
+                    <td class="col-sm-2">[[${course.startDate}]]</td>
+                    <td class="col-sm-1" style="text-align: right">[[${course.base}]]</td>
+                    <td class="col-sm-1" style="text-align: right">[[${course.fee}]]</td>
+                    <td class="col-sm-1" style="text-align: right">[[${course.nmr}]]</td>
+                    <td class="col-sm-1" style="text-align: right">[[${course.total}]]</td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr class="d-flex">
+                    <td class="col-sm-1">Code: GT</td>
+                    <td class="col-sm-9">Refunds will go to the registered student of record.</td>
+                    <td class="col-sm-1">Total Due</td>
+                    <td class="col-sm-1" style="text-align: right">[[${student.totalTuition}]]</td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <br/>
         <div class="form-row justify-content-center">
             <button type="reset" class="btn btn-outline-dark">Reset</button>
             <button type="submit" class="btn btn-outline-dark">Submit</button>

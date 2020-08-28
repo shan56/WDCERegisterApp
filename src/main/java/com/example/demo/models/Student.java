@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 
 /**
@@ -26,15 +27,14 @@ public class Student {
 	@Column(name = "studentid")
 	private String studentId;   // college id number
 
-	@Size(min=2, max=2)
+	@Size(max=2)
 	private String month;
-	@Size(min=2, max=2)
+	@Size(max=2)
 	private String day;
-	@Size(min=4, max=4)
+	@Size(max=4)
 	private String year;
 
-	@NotNull
-	private String gender;
+	private boolean male;
 
 	@NotBlank
 	@Size(min=1, max=30)
@@ -64,10 +64,11 @@ public class Student {
 
 	@NotBlank
 	private String zipcode;
-	private String zipcode2;
 
+	private String zipcode2;
 	private String homephone;
 	private String workphone;
+
 	@NotBlank
 	private String cellphone;
 
@@ -77,17 +78,14 @@ public class Student {
 	private String email;
 
 	//Has attended Montgomery College Before
-	@NotNull
 	private boolean attenMcb4;
 
 	//How did they hear about us?
-	@Column(name="Heard_about_us")
 	private String hearMC;  // brochure, website, sns, advertisement, on campus, other
 
 	private String digits; //for Military Service
 
 	//Race or ethnicity choices, true or false
-	private boolean notHispanic;
 	private boolean hispanic;
 	private boolean americanIndian;
 	private boolean asian;
@@ -102,16 +100,11 @@ public class Student {
 	private boolean otherStatus;
 	private String otherPermanent;
 
-	@NotNull
 	private boolean mdRes; //Is a MD resident
-
-	@NotNull
 	private boolean sixtyPlus; //Is sixty years of age or older
-
-	@NotNull
 	private boolean mdNatGuard;  //Is a MD national guard member
 
-	private LocalDate registerDate;   // register date
+	private Date registerDate;   // register date
 
 	private long totalTuition;
 
@@ -121,6 +114,9 @@ public class Student {
 	public Student() {
 		// initialize non-required fields for preview
 		this.studentId = " ";
+		this.month = " ";
+		this.day = " ";
+		this.year = " ";
 		this.middleInitial= " ";
 		this.aptnum= " ";
 		this.zipcode2= " ";
@@ -129,6 +125,7 @@ public class Student {
 		this.hearMC= " ";
 		this.digits= " ";
 		this.otherPermanent= " ";
+
 		this.registerCourses = new Collection<RegisterCourse>() {
 			@Override
 			public int size() {
@@ -285,13 +282,7 @@ public class Student {
 		this.city = city;
 	}
 
-	public String getGender() {
-		return gender;
-	}
 
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
 
 	public boolean isAttenMcb4() {
 		return attenMcb4;
@@ -327,55 +318,58 @@ public class Student {
 
 
 	public boolean isHispanic() {
-		return hispanic;
+		return this.hispanic;
 	}
 
 	public void setHispanic(boolean hispanic) {
-		hispanic = hispanic;
+		this.hispanic = hispanic;
 	}
 
 	public boolean isAmericanIndian() {
-		return americanIndian;
+		return this.americanIndian;
 	}
 
 	public void setAmericanIndian(boolean americanIndian) {
-		americanIndian = americanIndian;
+		this.americanIndian = americanIndian;
 	}
 
 	public boolean isAsian() {
-		return asian;
+		return this.asian;
 	}
 
 	public void setAsian(boolean asian) {
-		asian = asian;
+		this.asian = asian;
 	}
 
 	public boolean isBlackAfricanAmerican() {
-		return blackAfricanAmerican;
+		return this.blackAfricanAmerican;
 	}
 
 	public void setBlackAfricanAmerican(boolean blackAfricanAmerican) {
-		blackAfricanAmerican = blackAfricanAmerican;
+		this.blackAfricanAmerican = blackAfricanAmerican;
 	}
 
 	public boolean isWhite() {
-		return white;
+		return this.white;
 	}
 
 	public void setWhite(boolean white) {
-		white = white;
+		this.white = white;
 	}
 
 	public boolean isHawaiian() {
-		return hawaiian;
+		return this.hawaiian;
 	}
 
 	public void setHawaiian(boolean hawaiian) {
-		hawaiian = hawaiian;
+		this.hawaiian = hawaiian;
 	}
 
 	public String getHearMC() {
-		return hearMC;
+		if (this.hearMC == null)
+			return " ";
+		else
+			return this.hearMC;
 	}
 
 	public void setHearMC(String hearMC) {
@@ -383,7 +377,7 @@ public class Student {
 	}
 
 	public String getAptnum() {
-		return aptnum;
+		return this.aptnum;
 	}
 
 	public void setAptnum(String aptnum) {
@@ -391,7 +385,7 @@ public class Student {
 	}
 
 	public String getMonth() {
-		return month;
+		return this.month;
 	}
 
 	public void setMonth(String month) {
@@ -399,7 +393,7 @@ public class Student {
 	}
 
 	public String getDay() {
-		return day;
+		return this.day;
 	}
 
 	public void setDay(String day) {
@@ -407,15 +401,23 @@ public class Student {
 	}
 
 	public String getYear() {
-		return year;
+		return this.year;
 	}
 
 	public void setYear(String year) {
 		this.year = year;
 	}
 
+	public boolean isMale() {
+		return male;
+	}
+
+	public void setMale(boolean male) {
+		this.male = male;
+	}
+
 	public String getZipcode2() {
-		return zipcode2;
+		return this.zipcode2;
 	}
 
 	public void setZipcode2(String zipcode2) {
@@ -423,7 +425,7 @@ public class Student {
 	}
 
 	public String getWorkphone() {
-		return workphone;
+		return this.workphone;
 	}
 
 	public void setWorkphone(String workphone) {
@@ -431,7 +433,7 @@ public class Student {
 	}
 
 	public String getCellphone() {
-		return cellphone;
+		return this.cellphone;
 	}
 
 	public void setCellphone(String cellphone) {
@@ -439,23 +441,15 @@ public class Student {
 	}
 
 	public String getDigits() {
-		return digits;
+		return this.digits;
 	}
 
 	public void setDigits(String digits) {
 		this.digits = digits;
 	}
 
-	public boolean isNotHispanic() {
-		return notHispanic;
-	}
-
-	public void setNotHispanic(boolean notHispanic) {
-		this.notHispanic = notHispanic;
-	}
-
 	public boolean isPermanentResident() {
-		return permanentResident;
+		return this.permanentResident;
 	}
 
 	public void setPermanentResident(boolean permanentResident) {
@@ -463,7 +457,7 @@ public class Student {
 	}
 
 	public boolean isGreenCard() {
-		return greenCard;
+		return this.greenCard;
 	}
 
 	public void setGreenCard(boolean greenCard) {
@@ -471,7 +465,7 @@ public class Student {
 	}
 
 	public boolean isWorkingCard() {
-		return workingCard;
+		return this.workingCard;
 	}
 
 	public void setWorkingCard(boolean workingCard) {
@@ -479,7 +473,7 @@ public class Student {
 	}
 
 	public boolean isOtherStatus() {
-		return otherStatus;
+		return this.otherStatus;
 	}
 
 	public void setOtherStatus(boolean otherStatus) {
@@ -487,7 +481,7 @@ public class Student {
 	}
 
 	public String getOtherPermanent() {
-		return otherPermanent;
+		return this.otherPermanent;
 	}
 
 	public void setOtherPermanent(String otherPermanent) {
@@ -495,16 +489,16 @@ public class Student {
 	}
 
 
-	public LocalDate getRegisterDate() {
-		return registerDate;
+	public Date getRegisterDate() {
+		return this.registerDate;
 	}
 
-	public void setRegisterDate(LocalDate registerDate) {
+	public void setRegisterDate(Date registerDate) {
 		this.registerDate = registerDate;
 	}
 
 	public boolean isMdNatGuard() {
-		return mdNatGuard;
+		return this.mdNatGuard;
 	}
 
 	public void setMdNatGuard(boolean mdNatGuard) {
@@ -513,7 +507,7 @@ public class Student {
 
 
 	public long getTotalTuition() {
-		return totalTuition;
+		return this.totalTuition;
 	}
 
 	public void setTotalTuition(long totalTuition) {
@@ -521,7 +515,7 @@ public class Student {
 	}
 
 	public Collection<RegisterCourse> getRegisterCourses() {
-		return registerCourses;
+		return this.registerCourses;
 	}
 
 	public void setRegisterCourses(Collection<RegisterCourse> registerCourses) {
